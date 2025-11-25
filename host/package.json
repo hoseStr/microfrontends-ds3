@@ -9,31 +9,33 @@
     "build": "vite build",
     "build:webpack": "webpack --mode production",
     "lint": "eslint .",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "dev:all": "concurrently -n \"HOST,MICRO1,MICRO2,MICRO3\" -c \"bgBlue.bold,bgMagenta.bold,bgCyan.bold,bgGreen.bold\" \"npm run start\" \"npm --prefix ../micro1 run start\" \"npm --prefix ../micro2 run start\" \"npm --prefix ../micro3 run start\""
   },
   "dependencies": {
     "react": "^19.2.0",
     "react-dom": "^19.2.0"
   },
   "devDependencies": {
+    "@babel/core": "^7.25.0",
+    "@babel/preset-env": "^7.25.0",
+    "@babel/preset-react": "^7.25.0",
     "@eslint/js": "^9.39.1",
     "@types/react": "^19.2.5",
     "@types/react-dom": "^19.2.3",
     "@vitejs/plugin-react": "^5.1.1",
+    "babel-loader": "^9.1.3",
+    "concurrently": "^8.2.2",
+    "css-loader": "^6.8.1",
     "eslint": "^9.39.1",
     "eslint-plugin-react-hooks": "^7.0.1",
     "eslint-plugin-react-refresh": "^0.4.24",
     "globals": "^16.5.0",
+    "html-webpack-plugin": "^5.5.0",
+    "style-loader": "^3.3.2",
     "vite": "^7.2.4",
     "webpack": "^5.88.2",
     "webpack-cli": "^5.1.4",
-    "webpack-dev-server": "^4.15.0",
-    "html-webpack-plugin": "^5.5.0",
-    "babel-loader": "^9.1.3",
-    "@babel/core": "^7.25.0",
-    "@babel/preset-env": "^7.25.0",
-    "@babel/preset-react": "^7.25.0",
-    "style-loader": "^3.3.2",
-    "css-loader": "^6.8.1"
+    "webpack-dev-server": "^4.15.0"
   }
 }

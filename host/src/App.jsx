@@ -47,7 +47,7 @@ function App() {
               Bienvenido a Ventas con Microfrontends
             </h2>
             <p className="home-description">
-              Este proyecto demuestra la arquitectura de microfrontends usando <strong>Module Federation</strong>.
+              Este proyecto demuestra la arquitectura de microfrontends usando <strong>Webpack Module Federation</strong>.
             </p>
             
             <div className="cards-grid">
