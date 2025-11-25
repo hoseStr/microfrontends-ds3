@@ -26,7 +26,12 @@ export default (env, argv) => ({
         exclude: /node_modules/,
         use: {
           loader: "babel-loader",
-          options: { presets: ["@babel/preset-env", "@babel/preset-react"] },
+          options: {
+            presets: [
+              "@babel/preset-env",
+              ["@babel/preset-react", { runtime: "automatic" }],
+            ],
+          },
         },
       },
       { test: /\.css$/i, use: ["style-loader", "css-loader"] },
@@ -38,17 +43,32 @@ export default (env, argv) => ({
     historyApiFallback: true,
     static: { directory: path.join(__dirname, "public") },
     hot: true,
+    headers: {
+      "Access-Control-Allow-Origin": "*", // ← Importante para CORS
+    },
   },
   plugins: [
     new ModuleFederationPlugin({
       name: "micro2",
       filename: "remoteEntry.js",
-      exposes: { "./App": "./src/App" },
+      exposes: {
+        "./App": "./src/App.jsx", // ✅ Agregada extensión .jsx
+      },
       shared: {
-        react: { singleton: true, requiredVersion: false },
-        "react-dom": { singleton: true, requiredVersion: false },
+        react: {
+          singleton: true,
+          eager: true, // ← Agregado
+          requiredVersion: false,
+        },
+        "react-dom": {
+          singleton: true,
+          eager: true, // ← Agregado
+          requiredVersion: false,
+        },
       },
     }),
-    new HtmlWebpackPlugin({ template: path.resolve(__dirname, "index.html") }),
+    new HtmlWebpackPlugin({
+      template: path.resolve(__dirname, "index.html"),
+    }),
   ],
 });
