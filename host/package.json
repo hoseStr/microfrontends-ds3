@@ -10,7 +10,7 @@
     "build:webpack": "webpack --mode production",
     "lint": "eslint .",
     "preview": "vite preview",
-    "dev:all": "concurrently -n \"HOST,MICRO1,MICRO2,MICRO3\" -c \"bgBlue.bold,bgMagenta.bold,bgCyan.bold,bgGreen.bold\" \"npm run start\" \"npm --prefix ../micro1 run start\" \"npm --prefix ../micro2 run start\" \"npm --prefix ../micro3 run start\""
+    "dev:all": "concurrently -n \"HOST,MICRO1,MICRO2,MICRO3\" -c \"bgBlue.bold,bgMagenta.bold,bgCyan.bold,bgGreen.bold\" \"npm run start\" \"npm --prefix ../inventario run start\" \"npm --prefix ../micro2 run start\" \"npm --prefix ../micro3 run start\""
   },
   "dependencies": {
     "react": "^19.2.0",

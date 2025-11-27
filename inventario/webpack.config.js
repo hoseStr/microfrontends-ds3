@@ -49,7 +49,7 @@ export default (env, argv) => ({
   },
   plugins: [
     new ModuleFederationPlugin({
-      name: "micro1",
+      name: "inventario",
       filename: "remoteEntry.js",
       exposes: { 
         "./App": "./src/App.jsx"

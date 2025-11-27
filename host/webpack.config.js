@@ -60,7 +60,7 @@ export default (env, argv) => {
         name: "host",
         filename: "remoteEntry.js",
         remotes: {
-          micro1: "micro1@http://localhost:3001/remoteEntry.js",
+          inventario: "inventario@http://localhost:3001/remoteEntry.js",
           micro2: "micro2@http://localhost:3002/remoteEntry.js",
           micro3: "micro3@http://localhost:3003/remoteEntry.js",
         },
