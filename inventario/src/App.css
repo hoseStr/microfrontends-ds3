@@ -1,0 +1,5 @@
+/* Efecto hover suave */
+.product-card:hover {
+  transform: translateY(-8px);
+  box-shadow: var(--card-shadow-hover) !important;
+}
