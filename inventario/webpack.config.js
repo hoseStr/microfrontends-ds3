@@ -52,7 +52,8 @@ export default (env, argv) => ({
       name: "inventario",
       filename: "remoteEntry.js",
       exposes: { 
-        "./App": "./src/App.jsx"
+        "./App": "./src/App.jsx",
+        './ProductSelector': './src/components/ProductSelector.jsx',
       },
       shared: {
         react: { 
