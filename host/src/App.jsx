@@ -1,7 +1,7 @@
 import React, { Suspense, lazy, useState } from "react";
 import "./App.css";
 
-const Micro1 = lazy(() => import("micro1/App"));
+const Inventario = lazy(() => import("inventario/App"));
 const Micro2 = lazy(() => import("micro2/App"));
 const Micro3 = lazy(() => import("micro3/App"));
 
@@ -10,7 +10,7 @@ function App() {
 
   const routes = [
     { id: "home", name: "Home", component: null },
-    { id: "micro1", name: "Inventario", component: Micro1 },
+    { id: "inventario", name: "Inventario", component: Inventario },
     { id: "micro2", name: "Orden", component: Micro2 },
     { id: "micro3", name: "Ventas", component: Micro3 },
   ];
