@@ -60,9 +60,9 @@ export default (env, argv) => {
         name: "host",
         filename: "remoteEntry.js",
         remotes: {
-          inventario: "inventario@http://localhost:3001/remoteEntry.js",
-          micro2: "micro2@http://localhost:3002/remoteEntry.js",
-          micro3: "micro3@http://localhost:3003/remoteEntry.js",
+          inventario: "inventario@https://microfrontends-ds3-yyww.vercel.app/",
+          micro2: "micro2@https://microfrontends-ds3-ed9z.vercel.app/",
+          micro3: "micro3@https://microfrontends-ds3-fv49.vercel.app/",
         },
         exposes: {},
         shared: {
