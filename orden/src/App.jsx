@@ -157,6 +157,20 @@ export default function App() {
       }
     };
 
+    // 🔥 NUEVO: Polling para detectar cambios en orders_db
+    // Útil cuando el cambio viene de otro puerto (ej: Micro 3)
+    const pollingInterval = setInterval(() => {
+      const currentOrders = loadOrders();
+      setOrders(prev => {
+        // Solo actualizar si hay cambios
+        if (JSON.stringify(prev) !== JSON.stringify(currentOrders)) {
+          console.log("🔄 [Micro 2] Cambios detectados en orders_db (polling)");
+          return currentOrders;
+        }
+        return prev;
+      });
+    }, 2000); // Revisar cada 2 segundos
+
     // Cambios desde Micro 1 (Inventario)
     const onInventoryUpdated = (e) => {
       console.log("📦 [Micro 2] INVENTORY_UPDATED recibido:", e.detail);
@@ -214,13 +228,14 @@ export default function App() {
     window.addEventListener(EVENTS.SALE_PAID, onSalePaid);
     window.addEventListener(EVENTS.SALE_CANCELLED, onSaleCancelled);
 
-    console.log("✅ [Micro 2] Event listeners configurados");
+    console.log("✅ [Micro 2] Event listeners + Polling configurados");
 
     return () => {
       window.removeEventListener("storage", onStorage);
       window.removeEventListener(EVENTS.INVENTORY_UPDATED, onInventoryUpdated);
       window.removeEventListener(EVENTS.SALE_PAID, onSalePaid);
       window.removeEventListener(EVENTS.SALE_CANCELLED, onSaleCancelled);
+      clearInterval(pollingInterval);
     };
   }, []);
 

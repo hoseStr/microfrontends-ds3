@@ -156,6 +156,7 @@ const SalesList = () => {
       console.log("💳 Procesando pago para:", saleId);
       const paidSale = salesService.processPayment(saleId);
       
+      // Emitir evento (solo funciona en mismo puerto)
       window.dispatchEvent(
         new CustomEvent(EVENTS.SALE_PAID, {
           detail: {
@@ -165,6 +166,19 @@ const SalesList = () => {
           },
         })
       );
+      
+      // 🔥 NUEVO: Actualizar orden en orders_db directamente
+      const ordersRaw = localStorage.getItem('orders_db');
+      if (ordersRaw) {
+        const orders = JSON.parse(ordersRaw);
+        const updatedOrders = orders.map(order => 
+          order.orderId === paidSale.orderId
+            ? { ...order, status: 'COMPLETADA', completedAt: new Date().toISOString() }
+            : order
+        );
+        localStorage.setItem('orders_db', JSON.stringify(updatedOrders));
+        console.log(`✅ Orden ${paidSale.orderId} actualizada a COMPLETADA en orders_db`);
+      }
       
       setMsg({ type: "success", text: "✅ Pago exitoso. Stock descontado." });
 
@@ -182,6 +196,7 @@ const SalesList = () => {
       console.log("🚫 Cancelando venta:", saleId);
       const cancelledSale = salesService.cancelSale(saleId);
       
+      // Emitir evento (solo funciona en mismo puerto)
       window.dispatchEvent(
         new CustomEvent(EVENTS.SALE_CANCELLED, {
           detail: {
@@ -191,6 +206,24 @@ const SalesList = () => {
           },
         })
       );
+      
+      // 🔥 NUEVO: Actualizar orden en orders_db directamente
+      const ordersRaw = localStorage.getItem('orders_db');
+      if (ordersRaw) {
+        const orders = JSON.parse(ordersRaw);
+        const updatedOrders = orders.map(order => 
+          order.orderId === cancelledSale.orderId
+            ? { 
+                ...order, 
+                status: 'CANCELADA', 
+                cancelledAt: new Date().toISOString(),
+                cancelReason: 'Cancelada desde Ventas'
+              }
+            : order
+        );
+        localStorage.setItem('orders_db', JSON.stringify(updatedOrders));
+        console.log(`✅ Orden ${cancelledSale.orderId} actualizada a CANCELADA en orders_db`);
+      }
       
       setMsg({ type: "info", text: "⚠️ Venta cancelada." });
       
