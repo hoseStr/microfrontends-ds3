@@ -2,8 +2,8 @@ import React, { Suspense, lazy, useState } from "react";
 import "./App.css";
 
 const Inventario = lazy(() => import("inventario/App"));
-const Micro2 = lazy(() => import("micro2/App"));
-const Micro3 = lazy(() => import("micro3/App"));
+const Orden = lazy(() => import("orden/App"));
+const Ventas = lazy(() => import("ventas/App"));
 
 function App() {
   const [activeRoute, setActiveRoute] = useState("home");
@@ -11,8 +11,8 @@ function App() {
   const routes = [
     { id: "home", name: "Home", component: null },
     { id: "inventario", name: "Inventario", component: Inventario },
-    { id: "micro2", name: "Orden", component: Micro2 },
-    { id: "micro3", name: "Ventas", component: Micro3 },
+    { id: "orden", name: "Orden", component: Orden },
+    { id: "ventas", name: "Ventas", component: Ventas },
   ];
 
   const activeRouteData = routes.find((r) => r.id === activeRoute);
