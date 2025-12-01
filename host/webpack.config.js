@@ -3,14 +3,15 @@ import { fileURLToPath } from "url";
 import HtmlWebpackPlugin from "html-webpack-plugin";
 import webpack from "webpack";
 
-const {
-  container: { ModuleFederationPlugin },
-} = webpack;
+const { container: { ModuleFederationPlugin } } = webpack;
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 export default (env, argv) => {
   const isProd = argv?.mode === "production";
+
+  // Base URL para los remotes
+  const REMOTE_BASE = process.env.REMOTE_BASE || "http://localhost";
 
   return {
     entry: path.resolve(__dirname, "src", "main.jsx"),
@@ -34,19 +35,13 @@ export default (env, argv) => {
             options: {
               presets: [
                 "@babel/preset-env",
-                ["@babel/preset-react", { runtime: "automatic" }]
+                ["@babel/preset-react", { runtime: "automatic" }],
               ],
             },
           },
         },
-        {
-          test: /\.css$/i,
-          use: ["style-loader", "css-loader"],
-        },
-        {
-          test: /\.(png|jpe?g|gif|svg)$/i,
-          type: "asset/resource",
-        },
+        { test: /\.css$/i, use: ["style-loader", "css-loader"] },
+        { test: /\.(png|jpe?g|gif|svg)$/i, type: "asset/resource" },
       ],
     },
     devServer: {
@@ -60,9 +55,9 @@ export default (env, argv) => {
         name: "host",
         filename: "remoteEntry.js",
         remotes: {
-          inventario: "inventario@http://localhost:3001/remoteEntry.js",
-          micro2: "micro2@http://localhost:3002/remoteEntry.js",
-          micro3: "micro3@http://localhost:3003/remoteEntry.js",
+          inventario: "inventario@https://microfrontends-ds3-ashen.vercel.app/remoteEntry.js",
+          orden:     "orden@https://microfrontends-ds3-orden.vercel.app/remoteEntry.js",
+          ventas:    "ventas@https://microfrontends-ds3-ventas.vercel.app/remoteEntry.js",
         },
         exposes: {},
         shared: {
@@ -80,7 +75,7 @@ export default (env, argv) => {
       }),
       new HtmlWebpackPlugin({
         template: path.resolve(__dirname, "index.html"),
-      }),  
+      }),
     ],
     optimization: {
       runtimeChunk: "single",
