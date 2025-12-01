@@ -34,7 +34,7 @@ export default (env, argv) => {
             options: {
               presets: [
                 "@babel/preset-env",
-                ["@babel/preset-react", { runtime: "automatic" }]
+                ["@babel/preset-react", { runtime: "automatic" }],
               ],
             },
           },
@@ -60,9 +60,12 @@ export default (env, argv) => {
         name: "host",
         filename: "remoteEntry.js",
         remotes: {
-          inventario: "inventario@https://microfrontends-ds3-yyww.vercel.app/",
-          micro2: "micro2@https://microfrontends-ds3-ed9z.vercel.app/",
-          micro3: "micro3@https://microfrontends-ds3-fv49.vercel.app/",
+          inventario:
+            "inventario@https://microfrontends-ds3-yyww.vercel.app/remoteEntry.js",
+          orden:
+            "micro2@https://microfrontends-ds3-ed9z.vercel.app/remoteEntry.js",
+          ventas:
+            "micro3@https://microfrontends-ds3-fv49.vercel.app/remoteEntry.js",
         },
         exposes: {},
         shared: {
@@ -80,7 +83,7 @@ export default (env, argv) => {
       }),
       new HtmlWebpackPlugin({
         template: path.resolve(__dirname, "index.html"),
-      }),  
+      }),
     ],
     optimization: {
       runtimeChunk: "single",
