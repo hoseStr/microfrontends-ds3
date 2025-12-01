@@ -55,9 +55,9 @@ export default (env, argv) => {
         name: "host",
         filename: "remoteEntry.js",
         remotes: {
-          inventario: `inventario@${REMOTE_BASE}${isProd ? "" : ":3001"}/remoteEntry.js`,
-          orden:     `orden@${REMOTE_BASE}${isProd ? "" : ":3002"}/remoteEntry.js`,
-          ventas:    `ventas@${REMOTE_BASE}${isProd ? "" : ":3003"}/remoteEntry.js`,
+          inventario: "inventario@https://microfrontends-ds3-ashen.vercel.app/remoteEntry.js",
+          orden:     "orden@https://microfrontends-ds3-orden.vercel.app/remoteEntry.js",
+          ventas:    "ventas@https://microfrontends-ds3-ventas.vercel.app/remoteEntry.js",
         },
         exposes: {},
         shared: {
