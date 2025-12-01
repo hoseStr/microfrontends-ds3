@@ -4,12 +4,9 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "dev": "vite",
     "start": "webpack serve --mode development",
-    "build": "vite build",
+    "build": "npm run build:webpack",
     "build:webpack": "webpack --mode production",
-    "lint": "eslint .",
-    "preview": "vite preview",
     "dev:all": "concurrently -n \"HOST,INVENTARIO,ORDEN,VENTAS\" -c \"bgBlue.bold,bgMagenta.bold,bgCyan.bold,bgGreen.bold\" \"npm run start\" \"npm --prefix ../inventario run start\" \"npm --prefix ../orden run start\" \"npm --prefix ../ventas run start\""
   },
   "dependencies": {

@@ -3,14 +3,15 @@ import { fileURLToPath } from "url";
 import HtmlWebpackPlugin from "html-webpack-plugin";
 import webpack from "webpack";
 
-const {
-  container: { ModuleFederationPlugin },
-} = webpack;
+const { container: { ModuleFederationPlugin } } = webpack;
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 export default (env, argv) => {
   const isProd = argv?.mode === "production";
+
+  // Base URL para los remotes
+  const REMOTE_BASE = process.env.REMOTE_BASE || "http://localhost";
 
   return {
     entry: path.resolve(__dirname, "src", "main.jsx"),
@@ -39,14 +40,8 @@ export default (env, argv) => {
             },
           },
         },
-        {
-          test: /\.css$/i,
-          use: ["style-loader", "css-loader"],
-        },
-        {
-          test: /\.(png|jpe?g|gif|svg)$/i,
-          type: "asset/resource",
-        },
+        { test: /\.css$/i, use: ["style-loader", "css-loader"] },
+        { test: /\.(png|jpe?g|gif|svg)$/i, type: "asset/resource" },
       ],
     },
     devServer: {
@@ -60,12 +55,9 @@ export default (env, argv) => {
         name: "host",
         filename: "remoteEntry.js",
         remotes: {
-          inventario:
-            "inventario@https://microfrontends-ds3-yyww.vercel.app/remoteEntry.js",
-          orden:
-            "micro2@https://microfrontends-ds3-ed9z.vercel.app/remoteEntry.js",
-          ventas:
-            "micro3@https://microfrontends-ds3-fv49.vercel.app/remoteEntry.js",
+          inventario: `inventario@${REMOTE_BASE}${isProd ? "" : ":3001"}/remoteEntry.js`,
+          orden:     `orden@${REMOTE_BASE}${isProd ? "" : ":3002"}/remoteEntry.js`,
+          ventas:    `ventas@${REMOTE_BASE}${isProd ? "" : ":3003"}/remoteEntry.js`,
         },
         exposes: {},
         shared: {
